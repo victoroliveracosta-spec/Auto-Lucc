@@ -1,0 +1,58 @@
+AUTO LUCC — VERSÃO GITHUB PAGES + SUPABASE
+
+Seu site permanece em:
+https://victoroliveracosta-spec.github.io/Auto-Lucc/
+Acompanhar: https://victoroliveracosta-spec.github.io/Auto-Lucc/#acompanhar
+Equipe: https://victoroliveracosta-spec.github.io/Auto-Lucc/admin.html
+
+O QUE ESTA VERSÃO OFERECE:
+- Mantém o visual original, logo, serviços e agendamento pelo WhatsApp.
+- Admin autenticado por e-mail/senha (Supabase Authentication).
+- Cadastro de veículo e código aleatório de 20 caracteres, que a equipe informa ao cliente.
+- Alteração do andamento: Aguardando, Em lavagem, Finalização, Pronto para retirada.
+- Consulta do andamento na mesma página pelo código; atualiza a cada 30 segundos enquanto aberto.
+- Dados gravados no Supabase (não depende de Node.js ou Render).
+- Anonimamente os clientes não têm acesso à lista dos veículos, nomes ou telefones.
+
+COMO ATIVAR (PRECISA FAZER UMA ÚNICA VEZ):
+1. Projeto Supabase já informado: https://ejzjktxtqijjlbxodllg.supabase.co
+2. Abra o projeto > SQL Editor > New query; cole setup.sql e execute.
+3. Abra Authentication > Users > Add user. Cadastre UM e-mail da equipe com senha forte.
+   Copie o campo User UID/ID desse usuário. Se existir opção de confirmação automática,
+   marque e-mail confirmado para permitir o login sem fluxo de e-mail.
+4. No SQL Editor, rode exatamente (trocando o UUID pelo seu):
+   insert into public.auto_lucc_admins(user_id)
+   values ('COLE_AQUI_O_UUID_DO_USUARIO') on conflict do nothing;
+5. URL e PUBLISHABLE KEY públicas JÁ ESTÃO CONFIGURADAS em config.js.
+   Não altere essas linhas nem use a chave secret/service_role!
+6. Não é necessário instalar @supabase/server: GitHub Pages executa HTML/JS no navegador.
+7. No repositório GitHub "Auto-Lucc", substitua/adicionar os arquivos
+   index.html, admin.html, tracking.js, admin.js, db.js, config.js e logo-auto-lucc.jpeg.
+   Coloque todos na RAIZ da branch/pasta publicada no GitHub Pages.
+   Não precisa enviar server.js. Também não precisa publicar setup.sql no site.
+8. Aguarde o GitHub Pages atualizar e visite o link /Auto-Lucc/admin.html.
+   Entre com o e-mail/senha criados, cadastre veículo, copie o código e envie ao cliente.
+9. Cliente abre /Auto-Lucc/#acompanhar e consulta o código AL-XXXXXXXXXXXXXXXXXXXX.
+
+IMPORTANTE:
+- Sem executar setup.sql e autorizar o administrador, o site CONTINUA mostrando agendamentos,
+  mas o painel informará "Configuração pendente"; os status não funcionarão.
+- O agendamento por WhatsApp NÃO cadastra um acompanhamento automaticamente.
+  A equipe cria o código quando recebe o veículo; confirmação continua sendo manual.
+- Esta versão precisa de internet para conectar ao Supabase; o painel não é offline.
+- O campo de preço no site agora é texto único atualizado ao escolher a lavagem.
+- Mantenha o repositório livre de credenciais privadas e não publique senhas no HTML.
+- Para crescimento da operação, adicione limpeza periódica de registros, quotas
+  e limites de consultas/rate limiting a nível de API.
+- Alguns projetos Supabase gratuitos podem ser pausados por inatividade;
+  confira as condições atuais no painel da sua conta.
+
+ATENÇÃO AOS ACESSOS E À SEGURANÇA:
+- A senha de banco de dados/projeto Supabase NÃO é login do painel.
+- O painel usa um usuário criado em Authentication > Users, com e-mail e senha próprios.
+- Para autorizar o acesso, execute o INSERT do UUID em auto_lucc_admins (passo 4).
+- Caso uma senha real tenha sido compartilhada em conversa, considere trocá-la.
+- A chave secret/service_role jamais pode ser enviada ao GitHub Pages; mantenha-a só no Supabase.
+- Código do cliente tem 23 caracteres no total (AL- + 20 hexadecimais).
+- Agora o link copiado da equipe inclui o código; ao abrir, a consulta é preenchida automaticamente.
+- Ainda é necessário executar setup.sql e cadastrar/autorizar usuário administrador.
